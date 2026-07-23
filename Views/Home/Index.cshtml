@@ -1,15 +1,100 @@
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
-    <div class="container-fluid py-4">
-        <h1 class="display-5 fw-bold">Find your next course</h1>
-        <p class="col-md-8 fs-5">Explore courses and manage your student registration in one place.</p>
-        <a class="btn btn-primary btn-lg" asp-controller="Course" asp-action="Index">Browse courses</a>
+<div class="hero-section text-center py-5 mb-5 rounded-4 shadow">
+
+    <h1 class="display-3 fw-bold mb-3">
+         CampusConnect
+    </h1>
+
+    <p class="lead mb-4">
+        Your Smart Student Course Enrollment Portal
+    </p>
+
+    <p class="text-muted fs-5">
+        Discover professional courses, register securely,
+        and manage your academic journey with ease.
+    </p>
+
+    <div class="mt-4">
+
+        <a asp-controller="Course"
+           asp-action="Index"
+           class="btn btn-primary btn-lg px-4 me-3">
+            Explore Courses
+        </a>
+
         @if (User.Identity?.IsAuthenticated != true)
         {
-            <a class="btn btn-outline-primary btn-lg ms-2" asp-area="Identity" asp-page="/Account/Register">Create account</a>
+            <a asp-area="Identity"
+               asp-page="/Account/Register"
+               class="btn btn-outline-danger btn-lg px-4">
+                Get Started
+            </a>
         }
+
     </div>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+
+        <div class="card h-100 shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h3>📚 Course Catalog</h3>
+
+                <p>
+                    Browse available programs and choose the course
+                    that matches your interests.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card h-100 shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h3> Secure Access</h3>
+
+                <p>
+                    Role-based authentication ensures secure access
+                    for students and administrators.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card h-100 shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h3> Easy Enrollment</h3>
+
+                <p>
+                    Register for your preferred course and manage
+                    your profile from one dashboard.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

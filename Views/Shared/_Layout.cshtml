@@ -1,70 +1,190 @@
 @using System.Security.Claims
 @using Microsoft.EntityFrameworkCore
 @inject StudentRegistrationWebApp.Data.StudentCourseDbContext DbContext
+
 @{
     var isRegistered = false;
+
     if (User.Identity?.IsAuthenticated == true && User.IsInRole("Student"))
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        isRegistered = userId is not null && await DbContext.Students.AnyAsync(student => student.UserId == userId);
+
+        isRegistered = userId is not null &&
+            await DbContext.Students.AnyAsync(s => s.UserId == userId);
     }
+
+    var appName = "CampusConnect";
 }
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Student Registration</title>
+
+    <title>@ViewData["Title"] | @appName</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
+
 <body class="d-flex flex-column min-vh-100">
+
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+
+        <nav class="navbar navbar-expand-lg shadow">
+
             <div class="container">
-                <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">Student Registration</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                    🎓 CampusConnect
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
                 <div class="collapse navbar-collapse" id="mainNavigation">
+
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Course" asp-action="Index">Courses</a></li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="Course"
+                               asp-action="Index">
+                                Course Catalog
+                            </a>
+                        </li>
+
                         @if (User.IsInRole("Administrator"))
                         {
-                            <li class="nav-item"><a class="nav-link" asp-controller="Student" asp-action="Index">Students</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Student"
+                                   asp-action="Index">
+                                    Student Directory
+                                </a>
+                            </li>
                         }
                         else if (User.IsInRole("Student"))
                         {
                             @if (!isRegistered)
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Student" asp-action="Register">Register for Course</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       asp-controller="Student"
+                                       asp-action="Register">
+                                        Enroll Now
+                                    </a>
+                                </li>
                             }
-                            <li class="nav-item"><a class="nav-link" asp-controller="Student" asp-action="Profile">My Profile</a></li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Student"
+                                   asp-action="Profile">
+                                    My Dashboard
+                                </a>
+                            </li>
                         }
-                        else if (User.Identity?.IsAuthenticated != true)
+                        else
                         {
-                            <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-area="Identity"
+                                   asp-page="/Account/Register">
+                                    Create Account
+                                </a>
+                            </li>
                         }
+
                     </ul>
+
                     <partial name="_LoginPartial" />
+
                 </div>
+
             </div>
+
         </nav>
+
     </header>
+
     <main class="container py-4 flex-grow-1">
-        @if (TempData["SuccessMessage"] is string successMessage)
+
+        @if (TempData["SuccessMessage"] is string success)
         {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">@successMessage<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+            <div class="alert alert-success alert-dismissible fade show">
+
+                @success
+
+                <button class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
         }
-        @if (TempData["ErrorMessage"] is string errorMessage)
+
+        @if (TempData["ErrorMessage"] is string error)
         {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">@errorMessage<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+            <div class="alert alert-danger alert-dismissible fade show">
+
+                @error
+
+                <button class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
         }
+
         @RenderBody()
+
     </main>
-    <footer class="border-top text-muted py-3 mt-auto"><div class="container">&copy; 2026 Student Registration Web App</div></footer>
+
+    <footer class="footer mt-auto">
+
+        <div class="container text-center">
+
+            <strong>CampusConnect</strong>
+
+            <br />
+
+            Student Course Enrollment Portal
+
+            <br />
+
+            © 2026 All Rights Reserved
+
+        </div>
+
+    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
+
 </html>
