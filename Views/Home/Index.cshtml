@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+    <div class="container-fluid py-4">
+        <h1 class="display-5 fw-bold">Find your next course</h1>
+        <p class="col-md-8 fs-5">Explore courses and manage your student registration in one place.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Course" asp-action="Index">Browse courses</a>
+        @if (User.Identity?.IsAuthenticated != true)
+        {
+            <a class="btn btn-outline-primary btn-lg ms-2" asp-area="Identity" asp-page="/Account/Register">Create account</a>
+        }
+    </div>
+</div>

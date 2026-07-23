@@ -1,0 +1,4 @@
+@model Student
+@{ ViewData["Title"] = "My Profile"; }
+<div class="d-flex justify-content-between align-items-center mb-3"><h1>My Profile</h1><a class="btn btn-primary" asp-action="Edit">Edit Profile</a></div>
+<div class="card shadow-sm"><div class="card-body"><dl class="row mb-0"><dt class="col-sm-3">@Html.DisplayNameFor(model => model.FullName)</dt><dd class="col-sm-9">@Model.FullName</dd><dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.User?.Email</dd><dt class="col-sm-3">@Html.DisplayNameFor(model => model.City)</dt><dd class="col-sm-9">@Model.City</dd><dt class="col-sm-3">Course</dt><dd class="col-sm-9">@Model.Course?.CourseName (@Model.Course?.CourseDuration months)</dd></dl></div></div>

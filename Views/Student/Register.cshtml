@@ -1,0 +1,5 @@
+@model Student
+@{ ViewData["Title"] = "Register for Course"; }
+<h1>Register for a Course</h1><p class="text-muted">You can register for one course. You can update your profile details later.</p><hr />
+<div class="row"><div class="col-md-6"><form asp-action="Register" method="post"><div asp-validation-summary="ModelOnly" class="text-danger"></div><div class="mb-3"><label asp-for="FullName" class="form-label"></label><input asp-for="FullName" class="form-control" autocomplete="name" /><span asp-validation-for="FullName" class="text-danger"></span></div><div class="mb-3"><label asp-for="City" class="form-label"></label><input asp-for="City" class="form-control" /><span asp-validation-for="City" class="text-danger"></span></div><div class="mb-3"><label asp-for="CourseId" class="form-label"></label><select asp-for="CourseId" class="form-select" asp-items="ViewBag.CourseId"><option value="">Select a course</option></select><span asp-validation-for="CourseId" class="text-danger"></span></div><button type="submit" class="btn btn-primary">Register</button></form></div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

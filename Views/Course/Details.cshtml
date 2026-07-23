@@ -1,0 +1,5 @@
+@model Course
+@{ ViewData["Title"] = "Course Details"; }
+<h1>Course Details</h1><hr />
+<dl class="row"><dt class="col-sm-3">@Html.DisplayNameFor(model => model.CourseName)</dt><dd class="col-sm-9">@Model.CourseName</dd><dt class="col-sm-3">@Html.DisplayNameFor(model => model.CourseDuration)</dt><dd class="col-sm-9">@Model.CourseDuration months</dd><dt class="col-sm-3">Registered Students</dt><dd class="col-sm-9">@Model.Students.Count</dd></dl>
+<a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.CourseId">Edit</a> <a class="btn btn-outline-secondary" asp-action="Index">Back to Courses</a>
